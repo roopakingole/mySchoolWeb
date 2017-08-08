@@ -51,7 +51,16 @@
                     <li class="nav-item"> <a class="nav-link" ui-sref-active="active" ui-sref="app.route.update"><i class="icon-refresh"></i> Update Route</a> </li>
                     <li class="nav-item"> <a class="nav-link" ui-sref-active="active" ui-sref="app.route.delete"><i class="icon-minus"></i> Delete Route</a> </li>
                 </ul>
-            </li>            
+            </li>  
+            <li class="nav-item nav-dropdown" ng-class="{open: $state.includes('app.display')}">
+                <a class="nav-link nav-dropdown-toggle" ng-class="{open: $state.includes('app.display')}" href="#">
+                <i class="fa fa-area-chart fa-lg mt-1"></i> Reports </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item"> <a class="nav-link" ui-sref-active="active" ui-sref="app.display.studentinfo"><i class="icon-map"></i> Student Report</a> </li>
+                    <li class="nav-item"> <a class="nav-link" ui-sref-active="active" ui-sref="app.route.update"><i class="icon-refresh"></i> Staff Report</a> </li>
+                    <li class="nav-item"> <a class="nav-link" ui-sref-active="active" ui-sref="app.route.delete"><i class="icon-minus"></i> Bus Report</a> </li>
+                </ul>
+            </li>                      
             <li class="nav-item">
                 <a class="nav-link" ui-sref-active="active" ui-sref="app.widgets"><i class="icon-calculator"></i> Widgets <span class="badge badge-info">NEW</span></a>
             </li>

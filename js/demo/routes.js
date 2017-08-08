@@ -203,7 +203,38 @@ angular
       }]
     }
   })
-
+  .state('app.display', {
+    url: '/display',
+    abstract: true,
+    template: '<ui-view></ui-view>',
+    ncyBreadcrumb: {
+      label: 'Display'
+    }
+  })
+    .state('app.display.studentinfo', {
+    url: '/studentinfo',
+    templateUrl: '/views/studentDashboard.html',
+    ncyBreadcrumb: {
+      label: 'StudentInformation'
+    },
+    resolve: {
+      // Plugins loaded before
+      // loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
+      //     return $ocLazyLoad.load([
+      //         {
+      //             serial: true,
+      //             files: ['js/libs/Chart.min.js', 'js/libs/angular-chart.min.js']
+      //         }
+      //     ]);
+      // }],
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load files for an existing module
+        return $ocLazyLoad.load({
+          files: ['js/controllers/reports.js']
+        });
+      }]
+    }
+  })
   .state('app.route', {
     url: "/route",
     abstract: true,

@@ -1,0 +1,60 @@
+<div class="animated fadeIn" ng-controller="studentInfoCtrl as vm">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Combined All Table
+                </div>
+                <div class="card-block">
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Parent's Name</th>
+                                <th>Contact#</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Driver Contact#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="items in productsStudData">
+                                <td>{{items.StudId}}</td>
+                                <td>{{items.Name}}</td>
+                                <td>{{items.ParentsName}}</td>
+                                <td>{{items.ParentContact}}</td>
+                                <td>{{items.ParentEmail}}</td>
+                                <td>{{items.Address}}</td>
+                                <td>{{items.CityName}}</td>
+                                <td>{{items.StateName}}</td>
+                                <td>{{items.DriverContact}}</td>
+                            </tr>
+                        </tbody>                            
+                    </table>
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Prev</a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">2</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">3</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">4</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+    <!--/.row-->
+</div>
