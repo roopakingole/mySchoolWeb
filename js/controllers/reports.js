@@ -9,7 +9,7 @@ angular
         });
 });
 
-var webapiUrl = 'http://ec2-13-59-246-185.us-east-2.compute.amazonaws.com:1337/employees';
+var webapiUrl = 'http://ec2-13-59-22-248.us-east-2.compute.amazonaws.com:1337/employees';
 
 //convert Hex to RGBA
 function convertHex(hex,opacity){
