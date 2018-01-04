@@ -5,7 +5,11 @@
   "main": "index.html",
   "dependencies": {
     "del": "^2.2.2",
-    "gulp": "^3.9.1"
+    "express": "^4.16.2",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1",
+    "mysql": "^2.15.0",
+    "synchronize": "^2.0.0"
   },
   "devDependencies": {
     "browser-sync": "^2.16.0",

@@ -11,12 +11,24 @@ var rename = require('gulp-rename');
 var del = require('del');
 var runSequence = require('run-sequence');
 var replace = require('gulp-replace');
+var nodemon = require('gulp-nodemon');
 
 gulp.paths = {
     dist: 'dist',
 };
 
 var paths = gulp.paths;
+
+gulp.task('nodemon', function() {
+  nodemon({
+    script: './server/server_express.js',
+    ext: 'js',
+    ignore: ['dist/']
+  })
+  .on('restart', function() {
+    console.log('>> node restart');
+  })
+});
 
 // Static Server + watching scss/html files
 gulp.task('serve', ['sass'], function() {
@@ -110,4 +122,4 @@ gulp.task('build:dist', function(callback) {
     runSequence('clean:dist', 'copy:bower', 'copy:css', 'copy:img', 'copy:fonts', 'copy:js', 'copy:views', 'copy:html', 'replace:bower', callback);
 });
 
-gulp.task('default', ['serve']);
+gulp.task('default', ['nodemon','serve']);

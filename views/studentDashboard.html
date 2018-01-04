@@ -1,10 +1,11 @@
-<div class="animated fadeIn" ng-controller="studentInfoCtrl as vm">
+<div class="animated fadeIn" ng-controller="studentInfoCtrl">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i> Combined All Table
                 </div>
+				
                 <div class="card-block">
                     <table class="table table-bordered table-striped table-sm">
                         <thead>
@@ -21,7 +22,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="items in productsStudData">
+                            <tr ng-repeat="items in data">
                                 <td>{{items.StudId}}</td>
                                 <td>{{items.Name}}</td>
                                 <td>{{items.ParentsName}}</td>
@@ -34,6 +35,77 @@
                             </tr>
                         </tbody>                            
                     </table>
+
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>admission_no</th>
+                                <th>admission_date</th>
+                                <th>first_name</th>
+                                <th>middle_name</th>
+                                <th>last_name</th>
+                                <th>batch_id</th>
+                                <th>date_of_birth</th>
+                                <th>gender</th>
+                                <th>blood_group</th>
+                                <th>birth_place</th>
+                                <th>nationality_id</th>
+                                <th>language</th>
+                                <th>religion</th>
+                                <th>student_category_id</th>
+                                <th>address_line1</th>
+                                <th>city</th>
+                                <th>state</th>
+                                <th>pin_code</th>
+                                <th>country_id</th>
+                                <th>phone1</th>
+                                <th>phone2</th>
+                                <th>email</th>
+                                <th>is_sms_enabled</th>
+                                <th>is_active</th>
+                                <th>is_deleted</th>
+                                <th>created_at</th>
+                                <th>updated_at</th>
+                                <th>has_paid_fees</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="items in data">
+                                <td>{{items.id}}</td>
+                                <td>{{items.admission_no}}</td>
+                                <td>{{items.admission_date}}</td>
+                                <td>{{items.first_name}}</td>
+                                <td>{{items.middle_name}}</td>
+                                <td>{{items.last_name}}</td>
+                                <td>{{items.batch_id}}</td>
+                                <td>{{items.date_of_birth}}</td>
+                                <td>{{items.gender}}</td>
+                                <td>{{items.blood_group}}</td>
+                                <td>{{items.birth_place}}</td>
+                                <td>{{items.nationality_id}}</td>
+                                <td>{{items.language}}</td>
+                                <td>{{items.religion}}</td>
+                                <td>{{items.student_category_id}}</td>
+                                <td>{{items.address_line1}}</td>
+                                <td>{{items.city}}</td>
+                                <td>{{items.state}}</td>
+                                <td>{{items.pin_code}}</td>
+                                <td>{{items.country_id}}</td>
+                                <td>{{items.phone1}}</td>
+                                <td>{{items.phone2}}</td>
+                                <td>{{items.email}}</td>
+                                <td>{{items.is_sms_enabled}}</td>
+                                <td>{{items.is_active}}</td>
+                                <td>{{items.is_deleted}}</td>
+                                <td>{{items.created_at}}</td>
+                                <td>{{items.updated_at}}</td>
+                                <td>{{items.has_paid_fees}}</td>
+                            </tr>
+                        </tbody>                            
+                    </table>
+                    
+                    <label>
                     <nav>
                         <ul class="pagination">
                             <li class="page-item"><a class="page-link" href="#">Prev</a>
