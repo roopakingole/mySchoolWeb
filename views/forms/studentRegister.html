@@ -1,199 +1,212 @@
 <div class="animated fadeIn">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
+            <div class="card" ng-controller="studentRegistrationCtrl as studRegCtrl">
                 <div class="card-header">
-                    <strong>Basic Form</strong>Elements
+                    <strong>Admission/Enrollment/Registration</strong>
                 </div>
                 <div class="card-block">
-                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label">Static</label>
-                            <div class="col-md-9">
-                                <p class="form-control-static">Username</p>
-                            </div>
+                    <form name="admForm" role="form" enctype="multipart/form-data" class="form-horizontal" ng-submit="studRegCtrl.submit()">
+                        <div class="card-subtitle">
+                            <strong>Admission Details</strong>
                         </div>
+                        <br>
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="text-input">Text Input</label>
-                            <div class="col-md-9">
-                                <input type="text" id="text-input" name="text-input" class="form-control" placeholder="Text">
-                                <span class="help-block">This is a help text</span>
+                            <div class="col">
+                                <span class="help-block">Admission Number</span>
+                                <input type="text" id="admForm-admNo" name="disabled-input" class="form-control" placeholder="1" disabled ng-model="studRegCtrl.studentInfo.admission_no">
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="email-input">Email Input</label>
-                            <div class="col-md-9">
-                                <input type="email" id="email-input" name="email-input" class="form-control" placeholder="Enter Email">
-                                <span class="help-block">Please enter your email</span>
+                            <div class="col">
+                                <span class="help-block">Admission Date</span>
+                                <input type="text" id="admForm-date" name="text-input" class="form-control" placeholder="1/1/2018" disabled ng-model="studRegCtrl.studentInfo.admission_date | date">
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="password-input">Password</label>
-                            <div class="col-md-9">
-                                <input type="password" id="password-input" name="password-input" class="form-control" placeholder="Password">
-                                <span class="help-block">Please enter a complex password</span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="disabled-input">Disabled Input</label>
-                            <div class="col-md-9">
-                                <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="Disabled" disabled>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="textarea-input">Textarea</label>
-                            <div class="col-md-9">
-                                <textarea id="textarea-input" name="textarea-input" rows="9" class="form-control" placeholder="Content.."></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="select">Select</label>
-                            <div class="col-md-9">
-                                <select id="select" name="select" class="form-control">
-                                    <option value="0">Please select</option>
-                                    <option value="1">Option #1</option>
-                                    <option value="2">Option #2</option>
-                                    <option value="3">Option #3</option>
+                            <div class="col">
+                                <span class="help-block">Batch & Course</span>
+                                <select id="admForm-bthCrs" name="select" class="form-control">
+                                    <option value="1">CS101-123</option>
                                 </select>
                             </div>
                         </div>
+                        <hr>
+                        <div class="card-subtitle">
+                            <strong>Personal Details</strong>
+                        </div>
+                        <br>
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="select">Select Large</label>
-                            <div class="col-md-9">
-                                <select id="select" name="select" class="form-control form-control-lg">
-                                    <option value="0">Please select</option>
-                                    <option value="1">Option #1</option>
-                                    <option value="2">Option #2</option>
-                                    <option value="3">Option #3</option>
-                                </select>
+                            <div class="col">
+                                <input type="text" id="admForm-fName" name="text-input" class="form-control" placeholder="First" ng-model="studRegCtrl.studentInfo.first_name">
+                                <span class="help-block">First Name</span>
+                            </div>
+                            <div class="col">
+                                <input type="text" id="admForm-mName" name="text-input" class="form-control" placeholder="Middle" ng-model="studRegCtrl.studentInfo.middle_name">
+                                <span class="help-block">Middle Name</span>
+                            </div>
+                            <div class="col">
+                                <input type="text" id="admForm-lName" name="text-input" class="form-control" placeholder="Last" ng-model="studRegCtrl.studentInfo.lasts_name">
+                                <span class="help-block">Last Name</span>
                             </div>
                         </div>
+
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="select">Select Small</label>
-                            <div class="col-md-9">
-                                <select id="select" name="select" class="form-control form-control-sm">
-                                    <option value="0">Please select</option>
-                                    <option value="1">Option #1</option>
-                                    <option value="2">Option #2</option>
-                                    <option value="3">Option #3</option>
-                                </select>
+                            <div class="col-md-4">
+                                <input class="col" type="date" id="admForm-dob" name="text-input" class="form-control" placeholder="1/1/2018" ng-model="studRegCtrl.studentInfo.date_of_birth">
+                                <span class="help-block">Date of Birth</span>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="select">Disabled Select</label>
-                            <div class="col-md-9">
-                                <select id="disabledSelect" class="form-control" disabled>
-                                    <option value="0">Please select</option>
-                                    <option value="1">Option #1</option>
-                                    <option value="2">Option #2</option>
-                                    <option value="3">Option #3</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="multiple-select">Multiple select</label>
-                            <div class="col-md-9">
-                                <select id="multiple-select" name="multiple-select" class="form-control" size="5" multiple>
-                                    <option value="1">Option #1</option>
-                                    <option value="2">Option #2</option>
-                                    <option value="3">Option #3</option>
-                                    <option value="4">Option #4</option>
-                                    <option value="5">Option #5</option>
-                                    <option value="6">Option #6</option>
-                                    <option value="7">Option #7</option>
-                                    <option value="8">Option #8</option>
-                                    <option value="9">Option #9</option>
-                                    <option value="10">Option #10</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label">Radios</label>
-                            <div class="col-md-9">
-                                <div class="radio">
-                                    <label for="radio1">
-                                        <input type="radio" id="radio1" name="radios" value="option1">Option 1
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label for="radio2">
-                                        <input type="radio" id="radio2" name="radios" value="option2">Option 2
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label for="radio3">
-                                        <input type="radio" id="radio3" name="radios" value="option3">Option 3
-                                    </label>
+                            <div class="col-md-4">
+                                <label for="admForm-genderM">
+                                    <input type="radio" id="admForm-genderM" name="radios" value="m" ng-model="studRegCtrl.studentInfo.gender">Male
+                                </label>
+                                <label for="admForm-genderM">
+                                    <input type="radio" id="admForm-genderF" name="radios" value="f" ng-model="studRegCtrl.studentInfo.gender">Female
+                                </label>
+                                <div>
+                                <span class="help-block">Gender</span>
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label">Inline Radios</label>
-                            <div class="col-md-9">
-                                <label class="radio-inline" for="inline-radio1">
-                                    <input type="radio" id="inline-radio1" name="inline-radios" value="option1">One
-                                </label>
-                                <label class="radio-inline" for="inline-radio2">
-                                    <input type="radio" id="inline-radio2" name="inline-radios" value="option2">Two
-                                </label>
-                                <label class="radio-inline" for="inline-radio3">
-                                    <input type="radio" id="inline-radio3" name="inline-radios" value="option3">Three
-                                </label>
+                            <div class="col">
+                                <select id="admForm-bloodG" name="select" class="form-control" ng-model="studRegCtrl.studentInfo.blood_group">
+                                    <option value="">Please select</option>
+                                    <option ng-repeat="grp in studRegCtrl.studentInfo.blood_group_list">{{grp}}</option>
+                                </select>
+                                <span class="help-block">Blood Group</span>
+                            </div>
+                            <div class="col">
+                                <input type="text" id="admForm-birthPlace" name="text-input" class="form-control" placeholder="Birth Place" ng-model="studRegCtrl.studentInfo.birth_place">
+                                <span class="help-block">Birth Place</span>
+                            </div>
+                            <div class="col">
+                                <select id="admForm-nationality" name="select" class="form-control" ng-model="studRegCtrl.studentInfo.nationality">
+                                    <option value="">Please select</option>
+                                    <option ng-repeat="country in countryList" value="{{country.id}}">{{country.name}}</option>
+                                </select>
+                                <span class="help-block">Nationality</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col">
+                                <input class="col" type="text" id="admForm-mTongue" name="text-input" class="form-control" placeholder="English" ng-model="studRegCtrl.studentInfo.language">
+                                <span class="help-block">Mother Tongue</span>
+                            </div>
+                            <div class="col">
+                                <select id="admForm-category" name="select" class="form-control" ng-model="studRegCtrl.studentInfo.category">
+                                    <option value="0">Please select</option>
+                                    <option value="1">Option #1</option>
+                                </select>
+                                <span class="help-block">Category</span>
+                            </div>
+                            <div class="col">
+                                <input class="col" type="text" id="admForm-religion" name="text-input" class="form-control" placeholder="First" ng-model="studRegCtrl.studentInfo.religion">
+                                <span class="help-block">Religion</span>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="card-subtitle">
+                            <strong>Contact Details</strong>
+                        </div>
+                        <br>
+                        <div class="form-group row">
+                            <div class="col">
+                                <input type="text" id="admForm-addrL1" name="text-input" class="form-control" placeholder="Line 1" ng-model="studRegCtrl.studentInfo.address_line1">
+                                <span class="help-block">Address Line 1</span>
+                            </div>
+                            <div class="col">
+                                <input type="text" id="admForm-addrL2" name="text-input" class="form-control" placeholder="Line 2" ng-model="studRegCtrl.studentInfo.address_line2">
+                                <span class="help-block">Address Line 2</span>
+                            </div>
+                            <div class="col">
+                                <input type="text" id="admForm-addrCity" name="text-input" class="form-control" placeholder="City" ng-model="studRegCtrl.studentInfo.city">
+                                <span class="help-block">City</span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label">Checkboxes</label>
-                            <div class="col-md-9">
+                            <div class="col">
+                                <input type="text" id="admForm-addrState" name="text-input" class="form-control" placeholder="State" ng-model="studRegCtrl.studentInfo.state">
+                                <span class="help-block">State</span>
+                            </div>
+                            <div class="col">
+                                <input type="text" id="admForm-addrZip" name="text-input" class="form-control" placeholder="Pin/Zip"  ng-model="studRegCtrl.studentInfo.pin_code">
+                                <span class="help-block">Pin/Zip Code</span>
+                            </div>
+                            <div class="col">
+                                <select id="admForm-addrCountry" name="select" class="form-control" ng-model="studRegCtrl.studentInfo.country">
+                                    <option value="">Please select</option>
+                                    <option ng-repeat="country in countryList" value="{{country.id}}">{{country.name}}</option>
+                                </select>
+                                <span class="help-block">Country</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col">
+                                <input type="text" id="admForm-phone" name="text-input" class="form-control" placeholder="123-456-7890" ng-model="studRegCtrl.studentInfo.phone1">
+                                <span class="help-block">Phone</span>
+                            </div>
+                            <div class="col">
+                                <input type="text" id="admForm-cell" name="text-input" class="form-control" placeholder="123-456-7890" ng-model="studRegCtrl.studentInfo.phone2">
+                                <span class="help-block">Cell</span>
+                            </div>
+                            <div class="col">
+                                <input type="email" id="admForm-email" name="email-input" class="form-control" placeholder="Enter Email" ng-model="studRegCtrl.studentInfo.email">
+                                <span class="help-block">Email</span>
+                            </div>
+                        </div>
+
+
+                        <hr>
+                        <div class="card-subtitle">
+                            <strong>Photo</strong>
+                        </div>
+                        <br>
+                        <div class="form-group row">
+                            <label class="col-md-4 form-control-label" for="admForm-photoFilePath">Upload Photo(50KB max)</label>
+                            <div class="col-md-4">
+                                <input type="file" id="admForm-photoFilePath" name="file-input">
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="card-subtitle">
+                            <strong>Settings</strong>
+                        </div>
+                        <br>
+                        <div class="form-group row">
+                            <label class="col-md-4 form-control-label">SMS Features</label>
+                            <div class="col-md-4">
                                 <div class="checkbox">
-                                    <label for="checkbox1">
-                                        <input type="checkbox" id="checkbox1" name="checkbox1" value="option1">Option 1
+                                    <label for="admForm-enblSMS">
+                                        <input type="checkbox" id="admForm-enblSMS" name="checkbox1" value="option1" ng-model="studRegCtrl.studentInfo.is_sms_enabled">Enable SMS Features
                                     </label>
                                 </div>
-                                <div class="checkbox">
-                                    <label for="checkbox2">
-                                        <input type="checkbox" id="checkbox2" name="checkbox2" value="option2">Option 2
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label for="checkbox3">
-                                        <input type="checkbox" id="checkbox3" name="checkbox3" value="option3">Option 3
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label">Inline Checkboxes</label>
-                            <div class="col-md-9">
-                                <label class="checkbox-inline" for="inline-checkbox1">
-                                    <input type="checkbox" id="inline-checkbox1" name="inline-checkbox1" value="option1">One
-                                </label>
-                                <label class="checkbox-inline" for="inline-checkbox2">
-                                    <input type="checkbox" id="inline-checkbox2" name="inline-checkbox2" value="option2">Two
-                                </label>
-                                <label class="checkbox-inline" for="inline-checkbox3">
-                                    <input type="checkbox" id="inline-checkbox3" name="inline-checkbox3" value="option3">Three
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="file-input">File input</label>
-                            <div class="col-md-9">
-                                <input type="file" id="file-input" name="file-input">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="file-multiple-input">Multiple File input</label>
-                            <div class="col-md-9">
-                                <input type="file" id="file-multiple-input" name="file-multiple-input" multiple>
                             </div>
                         </div>
                     </form>
                 </div>
+
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
-                    <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+                    <button type="submit" class="btn btn-sm btn-primary" ng-click="studRegCtrl.submit()"><i class="fa fa-dot-circle-o"></i> Submit</button>
+                    <button type="reset" class="btn btn-sm btn-danger" ng-click="studRegCtrl.reset()"><i class="fa fa-ban"></i> Reset</button>
                 </div>
             </div>
+</div>
+<!-- Modal -->
+<div bsmodal class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Student Registration Complete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Register more student</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ui-sref="app.main">No</button>
+            </div>
+        </div>
     </div>
-    <!--/.row-->
 </div>

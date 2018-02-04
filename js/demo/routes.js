@@ -198,7 +198,7 @@ angular
       loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
         // you can lazy load files for an existing module
         return $ocLazyLoad.load({
-          files: ['js/controllers/forms.js']
+          files: ['js/controllers/formsRegister.js']
         });
       }]
     }
@@ -236,18 +236,10 @@ angular
     }
   })
   .state('app.route', {
-    url: "/route",
-    abstract: true,
-    template: '<ui-view></ui-view>',
+    url: '/routeplanner',
+    templateUrl: 'views/route_planner.html',
     ncyBreadcrumb: {
-      label: 'Route'
-    }
-  })
-  .state('app.route.update', {
-    url: '/updateRoute',
-    templateUrl: 'views/update_route.html',
-    ncyBreadcrumb: {
-      label: 'UpdateRoute'
+      label: 'Route Planner'
     },
     resolve: {
       // Plugins loaded before
@@ -267,52 +259,5 @@ angular
       }]
     }
   })  
-  .state('app.route.add', {
-    url: '/addRoute',
-    templateUrl: 'views/add_route.html',
-    ncyBreadcrumb: {
-      label: 'AddRoute'
-    },
-    resolve: {
-      // Plugins loaded before
-      // loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
-      //     return $ocLazyLoad.load([
-      //         {
-      //             serial: true,
-      //             files: ['js/libs/Chart.min.js', 'js/libs/angular-chart.min.js']
-      //         }
-      //     ]);
-      // }],
-      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-        // you can lazy load files for an existing module
-        return $ocLazyLoad.load({
-          files: ['js/controllers/maps.js']
-        });
-      }]
-    }
-  })  
-  .state('app.route.delete', {
-    url: '/deleteRoute',
-    templateUrl: 'views/delete_route.html',
-    ncyBreadcrumb: {
-      label: 'DeleteRoute'
-    },
-    resolve: {
-      // Plugins loaded before
-      // loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
-      //     return $ocLazyLoad.load([
-      //         {
-      //             serial: true,
-      //             files: ['js/libs/Chart.min.js', 'js/libs/angular-chart.min.js']
-      //         }
-      //     ]);
-      // }],
-      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-        // you can lazy load files for an existing module
-        return $ocLazyLoad.load({
-          files: ['js/controllers/maps.js']
-        });
-      }]
-    }
-  })  
-}]);
+
+ }]);

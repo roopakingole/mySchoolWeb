@@ -13,7 +13,20 @@ var url = require('url');
 //        }
 //    });
 //};
-
+exports.login = function (req, resp) {
+    var data = JSON.parse(url.parse(req.url, true).query.SS, true);
+    console.log(data);
+    if(data.username == "admin" && data.password == "admin123") {
+        resp.writeHead(200, {"Content-type": "application:json"});
+        resp.write(JSON.stringify({auth:"pass"}));
+        resp.end();
+    }
+    else {
+        resp.writeHead(200, {"Content-type": "application:json"});
+        resp.write(JSON.stringify({auth:"fail"}));
+        resp.end();
+    }
+}
 exports.getList = function (req, resp) {
     db.GetParentsList("", function (dd2, Error1) {
         if (Error1) {
@@ -36,20 +49,32 @@ exports.getList = function (req, resp) {
     });
 };
 
-// exports.getList = function (req, resp) {
-//             db.GetList("", function (dd, Error2) {
+exports.getList2 = function (req, resp) {
+            db.GetList2("", function (dd, Error2) {
                 
-//                 if (Error2) {
+                if (Error2) {
 
-//                 }
-//                 else {
-//                     resp.writeHead(200, { "Content-type": "application:json" });
-//                     resp.write(JSON.stringify(dd));
-//                     resp.end();
-//                 }
-//             });
-// };
+                }
+                else {
+                    resp.writeHead(200, { "Content-type": "application:json" });
+                    resp.write(JSON.stringify(dd));
+                    resp.end();
+                }
+            });
+};
 
+exports.getCountryList = function (req, resp) {
+    db.GetCountryList("", function (dd, Error2) {
+        if (Error2) {
+
+        }
+        else {
+            resp.writeHead(200, { "Content-type": "application:json" });
+            resp.write(JSON.stringify(dd));
+            resp.end();
+        }
+    });
+};
 exports.getStateInfo = function (req, resp) {
     db.GetStateInfo("", function (dd, Error1) {
         if (Error1) {
@@ -99,6 +124,20 @@ exports.saveinformation = function (req, resp) {
     });
 
 }
+
+exports.registerStudent = function (req, resp) {
+    db.registerStudent(url.parse(req.url, true).query.SS, function (dd, Error) {
+        if (Error) {
+            throw Error;
+        }
+        else {
+            resp.writeHead(200, { "Content-type": "application:json" });
+            resp.write(JSON.stringify('true'));
+            resp.end();
+        }
+    });
+}
+
 
 exports.IsUnique = function (req, resp) {
     

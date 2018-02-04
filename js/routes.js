@@ -2,7 +2,7 @@ angular
 .module('app')
 .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$breadcrumbProvider', function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $breadcrumbProvider) {
 
-  $urlRouterProvider.otherwise('/dashboard');
+  $urlRouterProvider.otherwise('/login');
 
   $ocLazyLoadProvider.config({
     // Set to true if you want to see what and when is dynamically loaded
@@ -103,7 +103,24 @@ angular
   // Additional Pages
   .state('appSimple.login', {
     url: '/login',
-    templateUrl: 'views/pages/login.html'
+    templateUrl: 'views/pages/login.html',
+      resolve: {
+          // Plugins loaded before
+          // loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
+          //     return $ocLazyLoad.load([
+          //         {
+          //             serial: true,
+          //             files: ['js/libs/Chart.min.js', 'js/libs/angular-chart.min.js']
+          //         }
+          //     ]);
+          // }],
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+              // you can lazy load files for an existing module
+              return $ocLazyLoad.load({
+                  files: ['js/controllers/login.js']
+              });
+          }]
+      }
   })
   .state('appSimple.register', {
     url: '/register',

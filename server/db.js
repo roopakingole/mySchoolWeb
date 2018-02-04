@@ -1,86 +1,89 @@
 ﻿var mysql = require('mysql')
 var sync = require('synchronize');
+var NodeGeocoder = require('node-geocoder');
+
+var options = {
+    provider: 'google',
+
+    // Optional depending on the providers
+    httpAdapter: 'https', // Default
+    apiKey: 'AIzaSyBn7yxnlu-W_eeHfSEVYyHSnh9hMkgBqwE', // for Mapquest, OpenCage, Google Premier
+    formatter: 'json'        // 'gpx', 'string', ...
+};
+
+var geocoder = NodeGeocoder(options);
 
 var connection = mysql.createConnection({
    host     : 'myschooldb.cqpg3lhg6zxx.us-east-2.rds.amazonaws.com',
    user     : 'master',
    password : 'masterschool',
-   database : 'myschool'
+   database : 'myschool',
+   multipleStatements: true
 });
 
 
-// var connection = mysql.createConnection({
-//     host     : 'localhost',
-//     port     : '3307',
-//     user     : 'root',
-//     password : 'foradian',
-//     database : 'fedena_ultimate'
-// });
+var connection2 = mysql.createConnection({
+    host     : 'localhost',
+    port     : '3307',
+    user     : 'root',
+    password : 'foradian',
+    database : 'fedena_ultimate',
+    multipleStatements: true
+});
 
 connection.connect(function (err) {
     //if (err) throw err
-    console.log('You are now connected...')
+    console.log('You are now connected to ... myschool @ myschooldb aws')
+})
+connection2.connect(function (err) {
+    //if (err) throw err
+    console.log('You are now connected to ... fedena_ultimate @ localhost')
 })
 
-// exports.GetList = function (data, callback) {
-//     var Students = [];
+exports.GetList2 = function (data, callback) {
+    var Students = [];
 
-//     //connection.query('select id,admission_no,admission_date,first_name,middle_name,last_name,batch_id,date_of_birth,gender,blood_group,birth_place,nationality_id,language,religion,student_category_id,address_line1,city,state,pin_code,country_id,phone1,phone2,email,is_sms_enabled,is_active,is_deleted,created_at,updated_at,has_paid_fees from students', function (error, results, fields) {
-//     connection.query('select * from students', function (error, results, fields) {
-//         if (error) { throw error; }
-//         else {
-//             var PP = JSON.parse(data, true);
-//             for (var i = 0; i < results.length; i++) {
-//                 var PID = results[i].Parent_ID;
-//                 var ParentsName;
-//                 var ParentsContact;
-//                 var ParentsEmail;
-//                 for (var j = 0; j < PP.length; j++) {
-//                     if (PP[j].PID === PID) {
-//                         ParentsName = PP[j].PName;
-//                         ParentsContact = PP[j].PContact;
-//                         ParentsEmail = PP[j].PEmail;
-//                         break;
-//                     }
-//                 };
+    connection2.query('select id,admission_no,admission_date,first_name,middle_name,last_name,batch_id,date_of_birth,gender,blood_group,birth_place,nationality_id,language,religion,student_category_id,address_line1,city,state,pin_code,country_id,phone1,phone2,email,is_sms_enabled,is_active,is_deleted,created_at,updated_at,has_paid_fees from students', function (error, results, fields) {
+        if (error) { throw error; }
+        else {
+            for (var i = 0; i < results.length; i++) {
                 
-//                 Students.push(new Student(results[i].ID, results[i].Address, results[i].Name, ParentsName, results[i].City, results[i].State ,ParentsContact, ParentsEmail, "2344555669"));
-//                 // Students.push(new Student2(results[i].id,
-//                 //                             results[i].admission_no,
-//                 //                             results[i].admission_date,
-//                 //                             results[i].first_name,
-//                 //                             results[i].middle_name,
-//                 //                             results[i].last_name,
-//                 //                             results[i].batch_id,
-//                 //                             results[i].date_of_birth,
-//                 //                             results[i].gender,
-//                 //                             results[i].blood_group,
-//                 //                             results[i].birth_place,
-//                 //                             results[i].nationality_id,
-//                 //                             results[i].language,
-//                 //                             results[i].religion,
-//                 //                             results[i].student_category_id,
-//                 //                             results[i].address_line1,
-//                 //                             results[i].city,
-//                 //                             results[i].state,
-//                 //                             results[i].pin_code,
-//                 //                             results[i].country_id,
-//                 //                             results[i].phone1,
-//                 //                             results[i].phone2,
-//                 //                             results[i].email,
-//                 //                             results[i].is_sms_enabled,
-//                 //                             results[i].is_active,
-//                 //                             results[i].is_deleted,
-//                 //                             results[i].created_at,
-//                 //                             results[i].updated_at,
-//                 //                             results[i].has_paid_fees));
-//             };
-//             var dd = Students;
-//             callback(dd);
-//         }
-//         //res.end(JSON.stringify(results));;
-//     });
-// };
+                 Students.push(new Student2(results[i].id,
+                                             results[i].admission_no,
+                                             results[i].admission_date,
+                                             results[i].first_name,
+                                             results[i].middle_name,
+                                             results[i].last_name,
+                                             results[i].batch_id,
+                                             results[i].date_of_birth,
+                                             results[i].gender,
+                                             results[i].blood_group,
+                                             results[i].birth_place,
+                                             results[i].nationality_id,
+                                             results[i].language,
+                                             results[i].religion,
+                                             results[i].student_category_id,
+                                             results[i].address_line1,
+                                             results[i].city,
+                                             results[i].state,
+                                             results[i].pin_code,
+                                             results[i].country_id,
+                                             results[i].phone1,
+                                             results[i].phone2,
+                                             results[i].email,
+                                             results[i].is_sms_enabled,
+                                             results[i].is_active,
+                                             results[i].is_deleted,
+                                             results[i].created_at,
+                                             results[i].updated_at,
+                                             results[i].has_paid_fees));
+            };
+            var dd = Students;
+            callback(dd);
+        }
+        //res.end(JSON.stringify(results));;
+    });
+};
 
 
 exports.GetList = function (data, callback) {
@@ -179,6 +182,24 @@ exports.GetStateInfo = function (data, callback) {
     
 };
 
+exports.GetCountryList = function (data, callback) {
+    var list = [];
+
+    connection2.query("select * from countries", function (error, results, fields) {
+
+        if (error) {
+            throw error;
+        }
+        else {
+            for (var i = 0; i < results.length; i++) {
+                list.push(new countryInfo(results[i].id, results[i].name));
+            };
+            data = list;
+            callback(data);
+        }
+    });
+};
+
 exports.getCityInfo = function (data, callback) {
     var cities = [];
     //cities.push(new cityInfo(1, "Pune", 1));
@@ -268,6 +289,58 @@ exports.savestudentsinformation = function (data, ParentsID, callback) {
                  UniqueNo = results[results.length - 1].ID + 1;
             var SD = "INSERT INTO students (ID,Name,Class,Parent_ID,Subscription_ID,Dispatch_Center_ID,LoginName,Address,State,City) VALUES (?,?,?,?,?,?,?,?,?,?)";
             connection.query(SD, [UniqueNo, vv.Name, 1, PI, 1, 1,"SS"+UniqueNo, vv.Address, vv.StateName, vv.CityName], function (err, rows) {
+                if (err) throw err;
+                else {
+                    callback("", "");
+                }
+            });
+        }
+    });
+};
+
+exports.registerStudent = function (data, callback) {
+    var Students = [];
+
+    connection2.query('select id,admission_no,admission_date,first_name,middle_name,last_name,batch_id,date_of_birth,gender,blood_group,birth_place,nationality_id,language,religion,student_category_id,address_line1,city,state,pin_code,country_id,phone1,phone2,email,is_sms_enabled,is_active,is_deleted,created_at,updated_at,has_paid_fees from students', function (error, results, fields) {
+        if (error) { throw error; }
+        else {
+            var vv = JSON.parse(data, true);
+
+            // var UniqueNo = null;
+            // if (results.length == 0) {
+            //     UniqueNo = 1;
+            // }
+            // else
+            //     UniqueNo = results[results.length - 1].ID + 1;
+            var SD = "INSERT INTO students (admission_no,admission_date,first_name,middle_name,last_name,batch_id,date_of_birth,gender,blood_group,birth_place,nationality_id,language,religion,student_category_id,address_line1,city,state,pin_code,country_id,phone1,phone2,email,is_sms_enabled,is_active,is_deleted,created_at,updated_at,has_paid_fees) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            connection2.query(SD, [vv.admission_no,
+                                    vv.admission_date,
+                                    vv.first_name,
+                                    vv.middle_name,
+                                    vv.last_name,
+                                    vv.batch_id,
+                                    vv.date_of_birth,
+                                    vv.gender,
+                                    vv.blood_group,
+                                    vv.birth_place,
+                                    vv.nationality_id,
+                                    vv.language,
+                                    vv.religion,
+                                    vv.student_category_id,
+                                    vv.address_line1,
+                                    vv.city,
+                                    vv.state,
+                                    vv.pin_code,
+                                    vv.country_id,
+                                    vv.phone1,
+                                    vv.phone2,
+                                    vv.email,
+                                    vv.is_sms_enabled,
+                                    vv.is_active,
+                                    vv.is_deleted,
+                                    vv.created_at,
+                                    vv.updated_at,
+                                    vv.has_paid_fees], function (err, rows) {
                 if (err) throw err;
                 else {
                     callback("", "");
@@ -380,6 +453,12 @@ var cityInfo = function (cityid, cityName, stateID) {
     this.stateID = stateID;
 }
 
+var countryInfo = function (id, name) {
+    this.id = id;
+    this.name = name;
+}
+
+
 //exports.IsLoginCredentialsExists = function (userName, PhoneNumber, callback) {
 
 //    var d1 = JSON.parse(userName);
@@ -430,3 +509,259 @@ var cityInfo = function (cityid, cityName, stateID) {
 //        }
 //    });
 //}
+var busStopInfo = function (id, name, lat, lng, time, kidsstop, stPt) {
+    this.id = id;
+    this.StopName = name;
+    this.Latitude = lat;
+    this.Longitude = lng;
+    this.ScheduledTime = time;
+    this.kidsstop = kidsstop;
+    this.BusStartingPoint = stPt;
+};
+exports.getRoute = function (data, callback) {
+    var route_id = JSON.parse(data, true).routeId;
+    var route_info_results = [];
+    var bus_route_results = [];
+    var list = [];
+    connection2.query("select * from bus_route_info where bus_route_id=?", route_id, function (error, results, fields) {
+        if (error)
+            throw error;
+        else {
+            route_info_results = results;
+            list.push(route_info_results);
+            connection2.query("SELECT bus_route.bus_stop_id, bus_stop_info.bus_stop_name, bus_stop_info.lat, bus_stop_info.lng, bus_route.bus_schedule_time FROM bus_route inner join bus_stop_info on bus_route.bus_stop_id=bus_stop_info.bus_stop_id where bus_route_id = ? order by bus_schedule_time", route_id, function(error, results, fields) {
+                if (error)
+                    throw error;
+                else {
+                    for (var i = 0; i < results.length; i++) {
+                        list.push(new busStopInfo(results[i].bus_stop_id, results[i].bus_stop_name, results[i].lat, results[i].lng, results[i].bus_schedule_time, false, i==0?true:false ));
+                    }
+                    data = list;
+                    callback(data);
+                }
+            });
+        }
+    });
+};
+
+exports.getUserRoute = function (data, callback) {
+    var lData = JSON.parse(data, true);
+    var route_id = lData.routeId;
+    var stud_id = lData.studId;
+    var stop_id = 0;
+    var list = [];
+    connection2.query("select * from bus_route_info where bus_route_id=?", route_id, function (error, results, fields) {
+        if (error)
+            throw error;
+        else {
+            list.push(results);
+            //stop_id = getUserStopId(stud_id);
+            //console.log(stop_id);
+            var sq = "SELECT bus_route.bus_stop_id, bus_stop_info.bus_stop_name, bus_stop_info.lat, bus_stop_info.lng, bus_route.bus_schedule_time FROM bus_route inner join bus_stop_info on bus_route.bus_stop_id=bus_stop_info.bus_stop_id where bus_route_id = ? order by bus_schedule_time; select bus_stop_id from bus_stop_student_assignment where stud_id = ?";
+            connection2.query(sq, [route_id, stud_id], function(error, results, fields) {
+                if (error) throw error;
+                else {
+                    console.log(results[0]);
+                    console.log(results[1]);
+                    for (var i = 0; i < results[0].length; i++) {
+                        list.push(new busStopInfo(results[0][i].bus_stop_id, results[0][i].bus_stop_name, results[0][i].lat, results[0][i].lng, results[0][i].bus_schedule_time, results[0][i].bus_stop_id===results[1][0].bus_stop_id?true:false, i==0?true:false ));
+                    }
+                    data = list;
+                    callback(data);
+                }
+            });
+        }
+    });
+};
+
+// findRouteIndex = function (results, id) {
+//     var retVal = 0;
+//     var i = 0;
+//     var len = results.length;
+//     for(i = 0; i < len; i++) {
+//         if(results[i].bus_stop_id === id)
+//             retVal = i;
+//     }
+//     return retVal;
+// }
+//
+// findRouteFirstStop = function (results) {
+//     var retVal = 0;
+//     var i = 0;
+//     var len = results.length;
+//     for(i = 0; i < len; i++) {
+//         if(results[i].bus_stop_id === id)
+//             retVal = i;
+//     }
+//     return retVal;
+// }
+exports.getRouteList = function (data, callback) {
+    connection2.query("select * from bus_route_info", function (error, results, fields) {
+        if (error)
+            throw error;
+        else {
+            data = results;
+            callback(data);
+        }
+    });
+};
+
+exports.saveRoute = function (data, callback) {
+    var lData = JSON.parse(data, true);
+
+    //console.log(lData);
+    if(lData.waypoints.length > 0){
+        console.log("lat:" + lData.start.lat + " lng:" + lData.start.lng);
+
+        for(var i = 0; i < lData.waypoints.length; i++) {
+            console.log("lat:" + lData.waypoints[i].latEnd + " lng:" + lData.waypoints[i].lngEnd + " Name:" + lData.waypoints[i].stopName + "ScheduledTime" + lData.waypoints[i].schedTime);
+        }
+        console.log("lat:" + lData.end.lat + " lng:" + lData.end.lng);
+
+        var SD = "INSERT INTO bus_route_info (route_name,route_description) VALUES (?,?)";
+        var rndNum = Math.floor((Math.random()*6)+1);
+        connection2.query(SD, [lData.name, lData.description], function (err, route) {
+            if (err) throw err;
+            else {
+                console.log(route.insertId)
+                var SD = "INSERT INTO bus_stop_info (bus_stop_name,bus_stop_description,lat,lng) VALUES (?,?,?,?)";
+                var SD2 = "INSERT INTO bus_route (bus_route_id,bus_stop_id,bus_schedule_time) VALUES (?,?,?)";
+                connection2.query(SD, ["Start Bus Route" + route.insertId, "This is test route " + route.insertId, lData.start.lat, lData.start.lng], function (err, busstop) {
+                    if (err) throw err;
+                    else {
+                        console.log(busstop.insertId)
+                        connection2.query(SD2, [route.insertId, busstop.insertId, "7:30"], function (err, results00) {
+                            if (err) throw err;
+                            else {
+                                console.log(results00.insertId)
+                            }
+                        });
+                    }
+                });
+                for(var i = 0; i < lData.waypoints.length; i++)
+                {
+/*                    if(i == 0) {
+                        connection2.query(SD, ["Bus Route" + route.insertId, "This is test route " + route.insertId, lData.start.lat, lData.start.lng], function (err, busstop) {
+                            if (err) throw err;
+                            else {
+                                console.log(busstop.insertId)
+                                connection2.query(SD2, [route.insertId, busstop.insertId, "7:30"], function (err, results00) {
+                                    if (err) throw err;
+                                    else {
+                                        console.log(results00.insertId)
+                                    }
+                                });
+                            }
+                        });
+                    }*/
+/*                    else if(i == (lData.waypoints.length + 1)) {
+                        connection2.query(SD, ["Bus Route" + route.insertId, "This is test route " + route.insertId, lData.end.lat, lData.end.lng], function (err, busstop) {
+                            if (err) throw err;
+                            else {
+                                console.log(busstop.insertId)
+                                connection2.query(SD2, [route.insertId, busstop.insertId, "8:30"], function (err, results00) {
+                                    if (err) throw err;
+                                    else {
+                                        console.log(results00.insertId)
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    else {*/
+                        //console.log(lData.waypoints[i])
+/*                        connection2.query(SD, [lData.waypoints[i].stopName, "This is test route " + route.insertId, lData.waypoints[i].latEnd, lData.waypoints[i].lngEnd], function (err, busstop) {
+                            if (err) throw err;
+                            else {
+                                console.log(busstop.insertId)
+                                //console.log(lData.waypoints[i])
+                                //console.log(i)
+                                connection2.query(SD2, [route.insertId, busstop.insertId, lData.waypoints[i].schedTime], function (err, results00) {
+                                    if (err) throw err;
+                                    else {
+                                        console.log(results00.insertId)
+                                    }
+                                });
+                            }
+                        });*/
+                    connection2.query(SD, [lData.waypoints[i].stopName, "This is test route " + route.insertId, lData.waypoints[i].latEnd, lData.waypoints[i].lngEnd],
+                        (function(i){
+                            return function(err, busstop, fields) {
+                                console.log(busstop.insertId)
+                                connection2.query(SD2, [route.insertId, busstop.insertId, lData.waypoints[i].schedTime], function (err, results00) {
+                                    if (err) throw err;
+                                    else {
+                                        console.log(results00.insertId)
+                                    }
+                                });
+                            };
+                        })(i));
+                    //}
+
+                }
+                connection2.query(SD, ["End Bus Route" + route.insertId, "This is test route " + route.insertId, lData.end.lat, lData.end.lng], function (err, busstop) {
+                    if (err) throw err;
+                    else {
+                        console.log(busstop.insertId)
+                        connection2.query(SD2, [route.insertId, busstop.insertId, "8:30"], function (err, results00) {
+                            if (err) throw err;
+                            else {
+                                console.log(results00.insertId)
+                            }
+                        });
+                    }
+                });
+
+                callback("", "");
+                }
+                });
+
+            }
+            else {
+        callback("", "");
+
+    }
+
+
+
+
+
+    // Or using Promise
+/*    geocoder.reverse({lat:lData.start.lat, lon:lData.start.lng})
+        .then(function(res) {
+            console.log(res[0].formattedAddress);
+        })
+        .catch(function(err) {
+            console.log(err);
+        });
+    geocoder.reverse({lat:lData.end.lat, lon:lData.end.lng})
+        .then(function(res) {
+            console.log(res[0].formattedAddress);
+        })
+        .catch(function(err) {
+            console.log(err);
+        });*/
+/*
+    for(var i = 0; i < lData.waypoints.length-1; i++)
+    {
+        geocoder.reverse({lat:lData.waypoints[i].latEnd, lon:lData.waypoints[i].lngEnd})
+            .then(function(res) {
+                console.log(res[0].formattedAddress);
+            })
+            .catch(function(err) {
+                console.log(err);
+            });
+    }
+*/
+/*
+    connection2.query("select * from bus_route_info", function (error, results, fields) {
+        if (error)
+            throw error;
+        else {
+            data = results;
+            callback(data);
+        }
+    });
+*/
+    //callback("", "");
+};
