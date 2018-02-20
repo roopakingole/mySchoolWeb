@@ -53,3 +53,16 @@ exports.saveRoute = function (req, resp) {
         }
     });
 };
+
+exports.deleteRoute = function (req, resp) {
+    db.deleteRoute(url.parse(req.url, true).query.SS, function (dd, Error) {
+        if (Error) {
+            throw Error;
+        }
+        else {
+            resp.writeHead(200, { "Content-type": "application:json" });
+            resp.write(JSON.stringify(dd));
+            resp.end();
+        }
+    });
+};

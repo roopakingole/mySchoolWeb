@@ -49,7 +49,7 @@ angular
     alert('this circle has radius ' + this.getRadius());
   }
   vm.setCenter = function(event) {
-    console.log('event', event);
+    //console.log('event', event);
     map.setCenter(event.latLng);
   }
   vm.foo = function(event, arg1, arg2) {
@@ -57,16 +57,16 @@ angular
     alert(arg1+arg2);
   }
   vm.dragStart = function(event) {
-    console.log("drag started");
+    //console.log("drag started");
   }
   vm.drag = function(event) {
-    console.log("dragging");
+    //console.log("dragging");
   }
   vm.dragEnd = function(event) {
-    console.log("drag ended");
+    //console.log("drag ended");
   }
   vm.logLatLng = function(e) {
-    console.log('loc', e.latLng);
+    //console.log('loc', e.latLng);
   }
   vm.placeMarker = function(e) {
       if(vm.isEditRoute || vm.isNewRoute) {
@@ -77,7 +77,7 @@ angular
               document.getElementById('form').style.cssText = "display:block";
               if(vm.markerMap.has(marker)) {
                   var t = vm.markerMap.get(marker);
-                  console.log('marker',t.name);
+                  //console.log('marker',t.name);
                   document.getElementById('stopName').value = t.name;
                   document.getElementById('stopSchedTime').value = t.scheduledTime;
               }
@@ -101,35 +101,62 @@ angular
 
   vm.onClickSelectedRoute = function() {
 
-      var obj = { "routeId": $scope.selectedRoute};
+
       if($scope.selectedRoute) {
+
           vm.routeName = $scope.routeList[$scope.selectedRoute - 1].route_name;
           vm.routeDescription = $scope.routeList[$scope.selectedRoute - 1].route_description;
-      }
-      $http({method: 'GET', url: webapiUrl + '/bus/getRoute', params:{ "SS": JSON.stringify(obj)}}).
-      then(function(response) {
-          $scope.status = response.status;
-          $scope.data = response.data;
-          var len = $scope.data.length;
-          var i = 2;
-          console.log($scope.data);
-          if(len > 1) {
-              vm.wayPoints = [];
-              vm.startStop = new google.maps.LatLng($scope.data[1].Latitude, $scope.data[1].Longitude);
-              vm.endStop = new google.maps.LatLng($scope.data[len-1].Latitude, $scope.data[len-1].Longitude);
-              for (i = 2; i < len - 1; i++)
-                  vm.wayPoints.push({
-                      'location': new google.maps.LatLng($scope.data[i].Latitude, $scope.data[i].Longitude),
-                      stopover: true
-                  });
+          var routeId = $scope.routeList[$scope.selectedRoute - 1].bus_route_id;
+
+          var obj = { "routeId": routeId};
+          $http({
+              method: 'GET',
+              url: webapiUrl + '/bus/getRoute',
+              params: {"SS": JSON.stringify(obj)}
+          }).then(function (response) {
+              $scope.status = response.status;
+              $scope.data = response.data;
+              var len = $scope.data.length;
+              var i = 2;
+              //console.log($scope.data);
+              if (len > 1) {
+                  vm.wayPoints = [];
+                  vm.startStop = new google.maps.LatLng($scope.data[1].Latitude, $scope.data[1].Longitude);
+                  vm.endStop = new google.maps.LatLng($scope.data[len - 1].Latitude, $scope.data[len - 1].Longitude);
+                  for (i = 2; i < len - 1; i++)
+                      vm.wayPoints.push({
+                          'location': new google.maps.LatLng($scope.data[i].Latitude, $scope.data[i].Longitude),
+                          stopover: true
+                      });
                   vm.getDirections();
-              vm.isNewRoute = false;
-          }
-      }, function(response) {
-          $scope.data = response.data || 'Request failed';
-          $scope.status = response.status;
-      });
+                  vm.isNewRoute = false;
+              }
+          }, function (response) {
+              $scope.data = response.data || 'Request failed';
+              $scope.status = response.status;
+          });
+      }
   };
+
+  vm.onClickDeleteRoute = function() {
+
+        var obj = { "routeId": $scope.selectedRoute};
+        $http({method: 'POST', url: webapiUrl + '/bus/deleteRoute', params:{ "SS": JSON.stringify(obj)}}).
+        then(function(response) {
+            $scope.status = response.status;
+            $scope.data = response.data;
+            $http.get(webapiUrl + '/bus/getRouteList').
+            then(function(response) {
+                $scope.status = response.status;
+                $scope.routeList = response.data;
+            });
+        }, function(response) {
+            $scope.data = response.data || 'Request failed';
+            $scope.status = response.status;
+        });
+
+
+    };
 
 vm.onClickNewRoute = function() {
             vm.wayPoints = [];
@@ -250,8 +277,8 @@ function geocodeLatLng(geo, lat,lng) {
         var latlng = vm.currentMarker.getPosition();
         var stopName = document.getElementById('stopName').value;
         var stopSchedTime = document.getElementById('stopSchedTime').value;
-        console.log('loc',latlng.lat());
-        console.log('loc',latlng.lng());
+        //console.log('loc',latlng.lat());
+        //console.log('loc',latlng.lng());
         vm.markerMap.set(vm.currentMarker,{'marker':vm.currentMarker, 'name':stopName, 'scheduledTime':stopSchedTime});
     }
 

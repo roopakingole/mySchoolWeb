@@ -4,18 +4,26 @@
 </div> -->
 <div style="width: 100%; float:left; height: 100%" ng-controller="MapCtrl as vm">
   <div class="form-group row">
-    <div class="col-md-6">
+    <div class="col-md-2">
       <select id="rtPlannerSelectedRt" name="select" class="form-control" ng-model="selectedRoute" ng-click="vm.onClickSelectedRoute()">
         <option value="">Please select</option>
-        <option ng-repeat="route in routeList" value="{{route.bus_route_id}}">{{route.route_name}}({{route.route_description}})</option>
+        <option ng-repeat="route in routeList" value="{{$index+1}}">{{route.route_name}}({{route.route_description}})</option>
       </select>
       <span class="help-block">Select Route : Selected {{selectedRoute}}</span>
+    </div>
+    <div class="col-md-2">
+      <input type="text" id="rtPlanner-rtName" name="text-input" class="form-control" placeholder="Route Name" ng-model="vm.routeName" ng-disabled="!vm.isNewRoute">
+      <span class="help-block">Route Name</span>
+    </div>
+    <div class="col-md-4">
+      <input type="text" id="rtPlanner-rtDesc" name="text-input" class="form-control" placeholder="Route Description" ng-model="vm.routeDescription" ng-disabled="!vm.isNewRoute">
+      <span class="help-block">Route Description</span>
     </div>
     <div class="col">
       <button type="button" class="btn btn-warning" tooltip="Update Selected Route"><i class="fa fa-pencil-square-o fa-lg"></i></button>
     </div>
     <div class="col">
-      <button type="button" class="btn btn-danger" tooltip="Delete Selected Route"><i class="fa fa-minus-square-o  fa-lg"></i></button>
+      <button type="button" class="btn btn-danger" tooltip="Cancel Selected Route" ng-click="vm.onClickDeleteRoute()"><i class="fa fa-minus-square-o  fa-lg"></i></button>
     </div>
     <div class="col">
       <button type="button" class="btn btn-success" tooltip="Add New Route" tooltip-placement="top" ng-click="vm.onClickNewRoute()"><i class="fa fa-plus-square-o fa-lg"></i></button>
@@ -23,34 +31,12 @@
     <div class="col">
       <button type="button" class="btn btn-success" tooltip="Save Route" tooltip-placement="top" ng-click="vm.onClickSaveRoute()"><i class="fa fa-floppy-o fa-lg"></i></button>
     </div>
+    <div class="col">
+      <button type="button" class="btn btn-success" tooltip="Get Direction" tooltip-placement="top" ng-click="vm.onClickGetDirection()"><i class="fa fa-location-arrow fa-lg"></i></button>
+    </div>
   </div>
-    <div class="form-group row">
-      <div class="col-md-2">
-        <input type="text" id="rtPlanner-rtName" name="text-input" class="form-control" placeholder="Route Name" ng-model="vm.routeName" ng-disabled="!vm.isNewRoute">
-        <span class="help-block">Route Name</span>
-      </div>
-      <div class="col-md-4">
-        <input type="text" id="rtPlanner-rtDesc" name="text-input" class="form-control" placeholder="Route Description" ng-model="vm.routeDescription" ng-disabled="!vm.isNewRoute">
-        <span class="help-block">Route Description</span>
-      </div>
-      <div class="col">
-        <button type="button" class="btn btn-success" tooltip="Get Direction" tooltip-placement="top" ng-click="vm.onClickGetDirection()"><i class="fa fa-location-arrow fa-lg"></i></button>
-      </div>
-<!--      <b>Origin </b>
-      <select ng-model="origin" ng-init="origin='toronto'">
-        <option value="toronto">Toronto</option>
-        <option value="ottawa">Ottawa</option>
-        <option value="montreal">Montreal</option>
-      </select>
-
-      <b>Destionation </b>
-      <select ng-model="destination" ng-init="destination='ottawa'">
-        <option value="toronto">Toronto</option>
-        <option value="ottawa">Ottawa</option>
-        <option value="montreal">Montreal</option>
-      </select>-->
-  </div>
-      <ng-map zoom="14" id="my-map" center="37.7699298, -122.4469157" style="height:100%" on-click="vm.logLatLng()"  on-rightclick="vm.placeMarker()">
+    <div class="">
+      <ng-map zoom="14" id="my-map" center="37.7699298, -122.4469157" on-click="vm.logLatLng()"  on-rightclick="vm.placeMarker()" default-style="false" style="height:65vh; width:100%; display:block; position:relative">
 <!--        <directions
           draggable="true"
           panel="directions-panel"
@@ -62,7 +48,7 @@
       </ng-map> 
       Directions path length:
         {{map.directionsRenderers[0].directions.routes[0].overview_path.length}}
-  {{route}}
+    </div>
   <div id="form" style="display:none">
     <table>
       <tr><td>Name:</td> <td><input type='text' id='stopName'/> </td> </tr>

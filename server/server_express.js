@@ -20,7 +20,7 @@ app.post('/login', function (req, res) {
 
 app.get('/employees/ShowInfo', function (req, res) {
 	console.log('called ShowInfo');
-  emp.getList(req, res);
+  //emp.getList(req, res);
 });
 
 app.get('/employees/ShowInfo2', function (req, res) {
@@ -50,6 +50,10 @@ app.get('/bus/getRouteList', function (req, res) {
 app.get('/bus/getRoute', function (req, res) {
     console.log('called getRoute');
     bus.getRoute(req,res);
+});
+app.post('/bus/deleteRoute', function (req, res) {
+    console.log('called deleteRoute');
+    bus.deleteRoute(req,res);
 });
 app.get('/bus/getUserRoute', function (req, res) {
     console.log('called getUserRoute');

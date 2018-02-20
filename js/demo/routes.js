@@ -259,5 +259,52 @@ angular
       }]
     }
   })  
-
+  .state('app.bustracking', {
+    url: '/bustracking',
+    templateUrl: 'views/bustracking.html',
+    ncyBreadcrumb: {
+      label: 'Bus Tracking'
+    },
+    resolve: {
+      // Plugins loaded before
+      // loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
+      //     return $ocLazyLoad.load([
+      //         {
+      //             serial: true,
+      //             files: ['js/libs/Chart.min.js', 'js/libs/angular-chart.min.js']
+      //         }
+      //     ]);
+      // }],
+      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+        // you can lazy load files for an existing module
+        return $ocLazyLoad.load({
+          files: ['js/controllers/bustracking.js']
+        });
+      }]
+    }
+  })
+  .state('app.bustraceroute', {
+	    url: '/bustraceroute',
+	    templateUrl: 'views/bustraceroute.html',
+	    ncyBreadcrumb: {
+	      label: 'Bus Trace Route'
+	    },
+	    resolve: {
+	      // Plugins loaded before
+	      // loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
+	      //     return $ocLazyLoad.load([
+	      //         {
+	      //             serial: true,
+	      //             files: ['js/libs/Chart.min.js', 'js/libs/angular-chart.min.js']
+	      //         }
+	      //     ]);
+	      // }],
+	      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+	        // you can lazy load files for an existing module
+	        return $ocLazyLoad.load({
+	          files: ['js/controllers/bustraceroute.js']
+	        });
+	      }]
+	    }
+	  })
  }]);

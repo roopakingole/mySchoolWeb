@@ -18,12 +18,25 @@ angular
   'ncy-angular-breadcrumb',
   'angular-loading-bar',
   'ngMap',
-   'ngMaterial'
+  'ngMaterial',
+  'firebase'
 ])
 .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
   cfpLoadingBarProvider.includeSpinner = false;
   cfpLoadingBarProvider.latencyThreshold = 1;
 }])
+.config(function() {
+	  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBQBYwkR5TIAkl8Cjrwmqx4xF4Ob-QZteM",
+    authDomain: "myschoolweb-1508112511694.firebaseapp.com",
+    databaseURL: "https://myschoolweb-1508112511694.firebaseio.com",
+    projectId: "myschoolweb-1508112511694",
+    storageBucket: "myschoolweb-1508112511694.appspot.com",
+    messagingSenderId: "999860827149"
+  };
+  firebase.initializeApp(config);
+})
 .run(['$rootScope', '$state', '$stateParams', function($rootScope, $state, $stateParams) {
   $rootScope.$on('$stateChangeSuccess',function(){
     document.body.scrollTop = document.documentElement.scrollTop = 0;

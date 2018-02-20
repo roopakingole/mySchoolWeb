@@ -1,0 +1,26 @@
+<div style="width: 100%; float:left; height: 100%" ng-controller="busTrackingCtrl as vm">
+  <div class="form-group row">
+    <div class="col-md-2">
+      <select id="rtPlannerSelectedRt" name="select" class="form-control" ng-model="selectedRoute" ng-click="vm.onClickSelectedRoute()">
+        <option value="">Please select</option>
+        <option ng-repeat="route in routeList" value="{{$index+1}}">{{route.route_name}}({{route.route_description}})</option>
+      </select>
+      <span class="help-block">Select Route : Selected {{selectedRoute}}</span>
+    </div>
+    <div class="col-md-2">
+      <input type="text" id="rtPlanner-rtName" name="text-input" class="form-control" placeholder="Route Name" ng-model="vm.routeName" ng-disabled="!vm.isNewRoute">
+      <span class="help-block">Route Name</span>
+    </div>
+    <div class="col-md-4">
+      <input type="text" id="rtPlanner-rtDesc" name="text-input" class="form-control" placeholder="Route Description" ng-model="vm.routeDescription" ng-disabled="!vm.isNewRoute">
+      <span class="help-block">Route Description</span>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-success" tooltip="Get Direction" tooltip-placement="top" ng-click="vm.onClickGetDirection()"><i class="fa fa-location-arrow fa-lg"></i></button>
+    </div>
+  </div>
+  <div class="">
+    <ng-map zoom="14" id="my-map" center="37.7699298, -122.4469157"   on-rightclick="vm.placeMarker()" default-style="false" style="height:65vh; width:100%; display:block; position:relative">
+    </ng-map> 
+  </div>
+</div>

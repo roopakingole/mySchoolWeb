@@ -43,20 +43,20 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item">
+<!--             <li class="nav-item">
                 <a class="nav-link" ui-sref-active="active" ui-sref="app.route"><i class="icon-location-pin"></i>Route Planner<span class="badge badge-info">NEW</span></a>
             </li>
-<!--
+ -->
             <li class="nav-item nav-dropdown" ng-class="{open: $state.includes('app.route')}">
                 <a class="nav-link nav-dropdown-toggle" ng-class="{open: $state.includes('app.route')}" href="#">
-                <i class="icon-location-pin"></i> Route Planner </a>
+                <i class="fa fa-bus mt-1"></i> Transit </a>
                 <ul class="nav-dropdown-items">
-                    <li class="nav-item"> <a class="nav-link" ui-sref-active="active" ui-sref="app.route.add"><i class="icon-plus"></i> Add Route</a> </li>
-                    <li class="nav-item"> <a class="nav-link" ui-sref-active="active" ui-sref="app.route.update"><i class="icon-refresh"></i> Update Route</a> </li>
-                    <li class="nav-item"> <a class="nav-link" ui-sref-active="active" ui-sref="app.route.delete"><i class="icon-minus"></i> Delete Route</a> </li>
+                	<li class="nav-item"> <a class="nav-link" ui-sref-active="active" ui-sref="app.route"><i class="fa fa-map-o mt-1"></i>Route Planner<span class="badge badge-info">NEW</span></a> </li>
+                    <li class="nav-item"> <a class="nav-link" ui-sref-active="active" ui-sref="app.bustracking"><i class="fa fa-location-arrow mt-1"></i> Bus Tracking</a> </li>
+                    <li class="nav-item"> <a class="nav-link" ui-sref-active="active" ui-sref="app.bustraceroute"><i class="fa fa-history mt-1"></i> Bus Trace Route</a> </li>
                 </ul>
             </li>  
--->
+
             <li class="nav-item nav-dropdown" ng-class="{open: $state.includes('app.display')}">
                 <a class="nav-link nav-dropdown-toggle" ng-class="{open: $state.includes('app.display')}" href="#">
                 <i class="fa fa-area-chart fa-lg mt-1"></i> Reports </a>

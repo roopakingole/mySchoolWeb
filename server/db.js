@@ -17,7 +17,7 @@ var connection = mysql.createConnection({
    host     : 'myschooldb.cqpg3lhg6zxx.us-east-2.rds.amazonaws.com',
    user     : 'master',
    password : 'masterschool',
-   database : 'myschool',
+   database : 'fedena_ultimate',
    multipleStatements: true
 });
 
@@ -31,6 +31,7 @@ var connection2 = mysql.createConnection({
     multipleStatements: true
 });
 
+
 connection.connect(function (err) {
     //if (err) throw err
     console.log('You are now connected to ... myschool @ myschooldb aws')
@@ -40,10 +41,12 @@ connection2.connect(function (err) {
     console.log('You are now connected to ... fedena_ultimate @ localhost')
 })
 
+var mysqlConn = connection;
+
 exports.GetList2 = function (data, callback) {
     var Students = [];
 
-    connection2.query('select id,admission_no,admission_date,first_name,middle_name,last_name,batch_id,date_of_birth,gender,blood_group,birth_place,nationality_id,language,religion,student_category_id,address_line1,city,state,pin_code,country_id,phone1,phone2,email,is_sms_enabled,is_active,is_deleted,created_at,updated_at,has_paid_fees from students', function (error, results, fields) {
+    mysqlConn.query('select id,admission_no,admission_date,first_name,middle_name,last_name,batch_id,date_of_birth,gender,blood_group,birth_place,nationality_id,language,religion,student_category_id,address_line1,city,state,pin_code,country_id,phone1,phone2,email,is_sms_enabled,is_active,is_deleted,created_at,updated_at,has_paid_fees from students', function (error, results, fields) {
         if (error) { throw error; }
         else {
             for (var i = 0; i < results.length; i++) {
@@ -185,7 +188,7 @@ exports.GetStateInfo = function (data, callback) {
 exports.GetCountryList = function (data, callback) {
     var list = [];
 
-    connection2.query("select * from countries", function (error, results, fields) {
+    mysqlConn.query("select * from countries", function (error, results, fields) {
 
         if (error) {
             throw error;
@@ -301,7 +304,7 @@ exports.savestudentsinformation = function (data, ParentsID, callback) {
 exports.registerStudent = function (data, callback) {
     var Students = [];
 
-    connection2.query('select id,admission_no,admission_date,first_name,middle_name,last_name,batch_id,date_of_birth,gender,blood_group,birth_place,nationality_id,language,religion,student_category_id,address_line1,city,state,pin_code,country_id,phone1,phone2,email,is_sms_enabled,is_active,is_deleted,created_at,updated_at,has_paid_fees from students', function (error, results, fields) {
+    mysqlConn.query('select id,admission_no,admission_date,first_name,middle_name,last_name,batch_id,date_of_birth,gender,blood_group,birth_place,nationality_id,language,religion,student_category_id,address_line1,city,state,pin_code,country_id,phone1,phone2,email,is_sms_enabled,is_active,is_deleted,created_at,updated_at,has_paid_fees from students', function (error, results, fields) {
         if (error) { throw error; }
         else {
             var vv = JSON.parse(data, true);
@@ -313,7 +316,7 @@ exports.registerStudent = function (data, callback) {
             // else
             //     UniqueNo = results[results.length - 1].ID + 1;
             var SD = "INSERT INTO students (admission_no,admission_date,first_name,middle_name,last_name,batch_id,date_of_birth,gender,blood_group,birth_place,nationality_id,language,religion,student_category_id,address_line1,city,state,pin_code,country_id,phone1,phone2,email,is_sms_enabled,is_active,is_deleted,created_at,updated_at,has_paid_fees) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            connection2.query(SD, [vv.admission_no,
+            mysqlConn.query(SD, [vv.admission_no,
                                     vv.admission_date,
                                     vv.first_name,
                                     vv.middle_name,
@@ -523,25 +526,31 @@ exports.getRoute = function (data, callback) {
     var route_info_results = [];
     var bus_route_results = [];
     var list = [];
-    connection2.query("select * from bus_route_info where bus_route_id=?", route_id, function (error, results, fields) {
-        if (error)
-            throw error;
-        else {
-            route_info_results = results;
-            list.push(route_info_results);
-            connection2.query("SELECT bus_route.bus_stop_id, bus_stop_info.bus_stop_name, bus_stop_info.lat, bus_stop_info.lng, bus_route.bus_schedule_time FROM bus_route inner join bus_stop_info on bus_route.bus_stop_id=bus_stop_info.bus_stop_id where bus_route_id = ? order by bus_schedule_time", route_id, function(error, results, fields) {
-                if (error)
-                    throw error;
-                else {
-                    for (var i = 0; i < results.length; i++) {
-                        list.push(new busStopInfo(results[i].bus_stop_id, results[i].bus_stop_name, results[i].lat, results[i].lng, results[i].bus_schedule_time, false, i==0?true:false ));
+    if(route_id) {
+        mysqlConn.query("select * from bus_route_info where bus_route_id=?", route_id, function (error, results, fields) {
+            if (error)
+                throw error;
+            else {
+                route_info_results = results;
+                list.push(route_info_results);
+                mysqlConn.query("SELECT bus_route.bus_stop_id, bus_stop_info.bus_stop_name, bus_stop_info.lat, bus_stop_info.lng, bus_route.bus_schedule_time FROM bus_route inner join bus_stop_info on bus_route.bus_stop_id=bus_stop_info.bus_stop_id where bus_route_id = ? order by bus_schedule_time", route_id, function (error, results, fields) {
+                    if (error)
+                        throw error;
+                    else {
+                        for (var i = 0; i < results.length; i++) {
+                            list.push(new busStopInfo(results[i].bus_stop_id, results[i].bus_stop_name, results[i].lat, results[i].lng, results[i].bus_schedule_time, false, i == 0 ? true : false));
+                        }
+                        data = list;
+                        callback(data);
                     }
-                    data = list;
-                    callback(data);
-                }
-            });
-        }
-    });
+                });
+            }
+        });
+    }
+    else
+    {
+        callback("", "");
+    }
 };
 
 exports.getUserRoute = function (data, callback) {
@@ -550,7 +559,7 @@ exports.getUserRoute = function (data, callback) {
     var stud_id = lData.studId;
     var stop_id = 0;
     var list = [];
-    connection2.query("select * from bus_route_info where bus_route_id=?", route_id, function (error, results, fields) {
+    mysqlConn.query("select * from bus_route_info where bus_route_id=? and active=1", route_id, function (error, results, fields) {
         if (error)
             throw error;
         else {
@@ -558,7 +567,7 @@ exports.getUserRoute = function (data, callback) {
             //stop_id = getUserStopId(stud_id);
             //console.log(stop_id);
             var sq = "SELECT bus_route.bus_stop_id, bus_stop_info.bus_stop_name, bus_stop_info.lat, bus_stop_info.lng, bus_route.bus_schedule_time FROM bus_route inner join bus_stop_info on bus_route.bus_stop_id=bus_stop_info.bus_stop_id where bus_route_id = ? order by bus_schedule_time; select bus_stop_id from bus_stop_student_assignment where stud_id = ?";
-            connection2.query(sq, [route_id, stud_id], function(error, results, fields) {
+            mysqlConn.query(sq, [route_id, stud_id], function(error, results, fields) {
                 if (error) throw error;
                 else {
                     console.log(results[0]);
@@ -574,29 +583,9 @@ exports.getUserRoute = function (data, callback) {
     });
 };
 
-// findRouteIndex = function (results, id) {
-//     var retVal = 0;
-//     var i = 0;
-//     var len = results.length;
-//     for(i = 0; i < len; i++) {
-//         if(results[i].bus_stop_id === id)
-//             retVal = i;
-//     }
-//     return retVal;
-// }
-//
-// findRouteFirstStop = function (results) {
-//     var retVal = 0;
-//     var i = 0;
-//     var len = results.length;
-//     for(i = 0; i < len; i++) {
-//         if(results[i].bus_stop_id === id)
-//             retVal = i;
-//     }
-//     return retVal;
-// }
+
 exports.getRouteList = function (data, callback) {
-    connection2.query("select * from bus_route_info", function (error, results, fields) {
+    mysqlConn.query("select * from bus_route_info where active=1", function (error, results, fields) {
         if (error)
             throw error;
         else {
@@ -618,19 +607,19 @@ exports.saveRoute = function (data, callback) {
         }
         console.log("lat:" + lData.end.lat + " lng:" + lData.end.lng);
 
-        var SD = "INSERT INTO bus_route_info (route_name,route_description) VALUES (?,?)";
-        var rndNum = Math.floor((Math.random()*6)+1);
-        connection2.query(SD, [lData.name, lData.description], function (err, route) {
+        var SD = "INSERT INTO bus_route_info (route_name,route_description,active) VALUES (?,?,?)";
+        var isActive = 1;
+        mysqlConn.query(SD, [lData.name, lData.description, isActive], function (err, route) {
             if (err) throw err;
             else {
                 console.log(route.insertId)
                 var SD = "INSERT INTO bus_stop_info (bus_stop_name,bus_stop_description,lat,lng) VALUES (?,?,?,?)";
                 var SD2 = "INSERT INTO bus_route (bus_route_id,bus_stop_id,bus_schedule_time) VALUES (?,?,?)";
-                connection2.query(SD, ["Start Bus Route" + route.insertId, "This is test route " + route.insertId, lData.start.lat, lData.start.lng], function (err, busstop) {
+                mysqlConn.query(SD, ["Start Bus Route" + route.insertId, "This is test route " + route.insertId, lData.start.lat, lData.start.lng], function (err, busstop) {
                     if (err) throw err;
                     else {
                         console.log(busstop.insertId)
-                        connection2.query(SD2, [route.insertId, busstop.insertId, "7:30"], function (err, results00) {
+                        mysqlConn.query(SD2, [route.insertId, busstop.insertId, "7:30"], function (err, results00) {
                             if (err) throw err;
                             else {
                                 console.log(results00.insertId)
@@ -640,55 +629,11 @@ exports.saveRoute = function (data, callback) {
                 });
                 for(var i = 0; i < lData.waypoints.length; i++)
                 {
-/*                    if(i == 0) {
-                        connection2.query(SD, ["Bus Route" + route.insertId, "This is test route " + route.insertId, lData.start.lat, lData.start.lng], function (err, busstop) {
-                            if (err) throw err;
-                            else {
-                                console.log(busstop.insertId)
-                                connection2.query(SD2, [route.insertId, busstop.insertId, "7:30"], function (err, results00) {
-                                    if (err) throw err;
-                                    else {
-                                        console.log(results00.insertId)
-                                    }
-                                });
-                            }
-                        });
-                    }*/
-/*                    else if(i == (lData.waypoints.length + 1)) {
-                        connection2.query(SD, ["Bus Route" + route.insertId, "This is test route " + route.insertId, lData.end.lat, lData.end.lng], function (err, busstop) {
-                            if (err) throw err;
-                            else {
-                                console.log(busstop.insertId)
-                                connection2.query(SD2, [route.insertId, busstop.insertId, "8:30"], function (err, results00) {
-                                    if (err) throw err;
-                                    else {
-                                        console.log(results00.insertId)
-                                    }
-                                });
-                            }
-                        });
-                    }
-                    else {*/
-                        //console.log(lData.waypoints[i])
-/*                        connection2.query(SD, [lData.waypoints[i].stopName, "This is test route " + route.insertId, lData.waypoints[i].latEnd, lData.waypoints[i].lngEnd], function (err, busstop) {
-                            if (err) throw err;
-                            else {
-                                console.log(busstop.insertId)
-                                //console.log(lData.waypoints[i])
-                                //console.log(i)
-                                connection2.query(SD2, [route.insertId, busstop.insertId, lData.waypoints[i].schedTime], function (err, results00) {
-                                    if (err) throw err;
-                                    else {
-                                        console.log(results00.insertId)
-                                    }
-                                });
-                            }
-                        });*/
-                    connection2.query(SD, [lData.waypoints[i].stopName, "This is test route " + route.insertId, lData.waypoints[i].latEnd, lData.waypoints[i].lngEnd],
+                    mysqlConn.query(SD, [lData.waypoints[i].stopName, "This is test route " + route.insertId, lData.waypoints[i].latEnd, lData.waypoints[i].lngEnd],
                         (function(i){
                             return function(err, busstop, fields) {
                                 console.log(busstop.insertId)
-                                connection2.query(SD2, [route.insertId, busstop.insertId, lData.waypoints[i].schedTime], function (err, results00) {
+                                mysqlConn.query(SD2, [route.insertId, busstop.insertId, lData.waypoints[i].schedTime], function (err, results00) {
                                     if (err) throw err;
                                     else {
                                         console.log(results00.insertId)
@@ -699,11 +644,11 @@ exports.saveRoute = function (data, callback) {
                     //}
 
                 }
-                connection2.query(SD, ["End Bus Route" + route.insertId, "This is test route " + route.insertId, lData.end.lat, lData.end.lng], function (err, busstop) {
+                mysqlConn.query(SD, ["End Bus Route" + route.insertId, "This is test route " + route.insertId, lData.end.lat, lData.end.lng], function (err, busstop) {
                     if (err) throw err;
                     else {
                         console.log(busstop.insertId)
-                        connection2.query(SD2, [route.insertId, busstop.insertId, "8:30"], function (err, results00) {
+                        mysqlConn.query(SD2, [route.insertId, busstop.insertId, "8:30"], function (err, results00) {
                             if (err) throw err;
                             else {
                                 console.log(results00.insertId)
@@ -713,55 +658,28 @@ exports.saveRoute = function (data, callback) {
                 });
 
                 callback("", "");
-                }
-                });
-
             }
-            else {
-        callback("", "");
-
-    }
-
-
-
-
-
-    // Or using Promise
-/*    geocoder.reverse({lat:lData.start.lat, lon:lData.start.lng})
-        .then(function(res) {
-            console.log(res[0].formattedAddress);
-        })
-        .catch(function(err) {
-            console.log(err);
         });
-    geocoder.reverse({lat:lData.end.lat, lon:lData.end.lng})
-        .then(function(res) {
-            console.log(res[0].formattedAddress);
-        })
-        .catch(function(err) {
-            console.log(err);
-        });*/
-/*
-    for(var i = 0; i < lData.waypoints.length-1; i++)
-    {
-        geocoder.reverse({lat:lData.waypoints[i].latEnd, lon:lData.waypoints[i].lngEnd})
-            .then(function(res) {
-                console.log(res[0].formattedAddress);
-            })
-            .catch(function(err) {
-                console.log(err);
-            });
     }
-*/
-/*
-    connection2.query("select * from bus_route_info", function (error, results, fields) {
-        if (error)
-            throw error;
+    else {
+        callback("", "");
+    }
+};
+
+exports.deleteRoute = function (data, callback) {
+    var lData = JSON.parse(data, true);
+    //console.log(lData.routeId);
+
+//    var SD = "DELETE from bus_route where bus_route_id = ?; DELETE from bus_route_info where bus_route_id = ?";
+//    mysqlConn.query(SD, [lData.routeId, lData.routeId], function (err, busRoute) {
+    var SD = "UPDATE bus_route_info SET active='0' WHERE bus_route_id=?";
+    mysqlConn.query(SD, [lData.routeId], function (err, busRoute) {
+        if (err) throw err;
         else {
-            data = results;
-            callback(data);
+            //console.log(busRoute)
+
+            callback("", "");
         }
     });
-*/
-    //callback("", "");
-};
+
+}
